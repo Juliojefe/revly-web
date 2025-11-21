@@ -69,7 +69,7 @@ export default function Home() {
             onChange={e => setPassword(e.target.value)}
           />
         </label>
-        <button className={styles.loginBtn} type="submit"> Login </button>
+        <button className={styles.loginBtn} type="submit">Login</button>
         <button className={styles.signUpBtn} type="button" onClick={async () => router.push("/signUp")}> Create Account </button>
         <button
           className={styles.googleBtn}
