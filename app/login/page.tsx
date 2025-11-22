@@ -4,9 +4,12 @@ import React from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import authStyles from '../styles/auth.module.css';
+import { useUser } from "@/context/UserContext";
+
 
 export default function loginPage() {
   const router = useRouter();
+  const { setUser } = useUser();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -21,14 +24,14 @@ export default function loginPage() {
       });
       const authData = responseData.data;
       if (authData.accessToken) {
-        //  save data for sessions
-        // private String message;
-        // private String name;
-        // private String email;
-        // private String profilePic;
-        // private boolean isGoogle;
-        // private String accessToken;
-        // private String refreshToken;
+        setUser({
+          name: authData.name,
+          email: authData.email,
+          profilePic: authData.profilePic,
+          isGoogle: authData.isGoogle,
+          accessToken: authData.accessToken,
+          refreshToken: authData.refreshToken,
+        });
         router.push("/home");
       } else {
         setErrorMessage("Unexpected response from server.");

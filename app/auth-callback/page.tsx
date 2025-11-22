@@ -2,11 +2,13 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import styles from './auth-callback.module.css';
+import styles from '../styles/loading.module.css';
+import { useUser } from "@/context/UserContext";
 
 export default function AuthCallback() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setUser } = useUser();
 
   useEffect(() => {
     const name = decodeURIComponent(searchParams.get("name") || "");
@@ -17,19 +19,20 @@ export default function AuthCallback() {
     const refreshToken = searchParams.get("refreshToken");
 
     if (name && email && accessToken && refreshToken) {
-      //  save data for sessions
-      // private String message;
-      // private String name;
-      // private String email;
-      // private String profilePic;
-      // private boolean isGoogle;
-      // private String accessToken;
-      // private String refreshToken;
+      const userData = {
+        name,
+        email,
+        profilePic,
+        isGoogle,
+        accessToken,
+        refreshToken,
+      };
+      setUser(userData);
       router.push("/home");
     } else {
       router.push("/login?error=Authentication failed. Please try again.");
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, setUser]);
 
   return (
     <div className={styles.container}>
