@@ -1,12 +1,14 @@
 'use client';
 
-import React from "react";
+import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import authStyles from '../styles/auth.module.css';
+import { useUser } from "@/context/UserContext";
 
 export default function signUpPage() {
   const router = useRouter();
+  const { setUser } = useUser();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -24,12 +26,16 @@ export default function signUpPage() {
         confirmPassword: confirmPassword
       });
       const authData = responseData.data;
-      if (authData.accessToken && authData.refreshToken) {
-        /**
-         * persist repsonse data for sessions
-         */
-        // router.push("/home");
-        alert("working");
+      if (authData.accessToken) {
+        setUser({
+          name: authData.name,
+          email: authData.email,
+          profilePic: authData.profilePic,
+          isGoogle: authData.isGoogle,
+          accessToken: authData.accessToken,
+          refreshToken: authData.refreshToken,
+        });
+        router.push("/home");
       } else {
         setErrorMessage("Unexpected response from server.");
       }
@@ -44,7 +50,7 @@ export default function signUpPage() {
   }
 
   async function handleContinueWithGoogle() {
-    return;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`;
   }
 
   return (
