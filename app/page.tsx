@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import AuthLoading from "@/components/AuthLoading";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-import styles from './styles/loading.module.css';
 
 export default function Home() {
   const { user } = useUser();
@@ -17,10 +17,5 @@ export default function Home() {
     }
   }, [user, router]);
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.spinner}></div>
-      <p className={styles.text}>Checking authentication…</p>
-    </div>
-  );
+  return <AuthLoading/>;
 }
