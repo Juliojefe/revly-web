@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import styles from './auth-callback.module.css';
 
 export default function AuthCallback() {
   const router = useRouter();
@@ -16,6 +17,14 @@ export default function AuthCallback() {
     const refreshToken = searchParams.get("refreshToken");
 
     if (name && email && accessToken && refreshToken) {
+      //  save data for sessions
+      // private String message;
+      // private String name;
+      // private String email;
+      // private String profilePic;
+      // private boolean isGoogle;
+      // private String accessToken;
+      // private String refreshToken;
       router.push("/home");
     } else {
       router.push("/login?error=Authentication failed. Please try again.");
@@ -23,53 +32,9 @@ export default function AuthCallback() {
   }, [searchParams, router]);
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <img
-          src="https://media1.tenor.com/m/KEzW7ALwfUAAAAAC/cat-what.gif"
-          alt="Loading cat"
-          style={styles.gif}
-        />
-        <p style={styles.text}>Processing authentication</p>
-      </div>
+    <div className={styles.container}>
+      <div className={styles.spinner}></div>
+      <p className={styles.text}>Loading…</p>
     </div>
   );
 }
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundColor: "#f0f2f5",
-  },
-  card: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "2rem",
-    backgroundColor: "white",
-    borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-  },
-  gif: {
-    width: "300px",
-    height: "300px",
-    marginBottom: "1rem",
-  },
-  spinner: {
-    border: "4px solid rgba(0, 0, 0, 0.1)",
-    width: "36px",
-    height: "36px",
-    borderRadius: "50%",
-    borderLeftColor: "#09f",
-    marginBottom: "1rem",
-    animation: "spin 1s ease infinite",
-  },
-  text: {
-    fontSize: "1.1rem",
-    color: "#333",
-    fontWeight: 500,
-  },
-};

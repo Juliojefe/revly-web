@@ -21,9 +21,14 @@ export default function loginPage() {
       });
       const authData = responseData.data;
       if (authData.accessToken) {
-        /**
-         * persist repsonse data for sessions
-         */
+        //  save data for sessions
+        // private String message;
+        // private String name;
+        // private String email;
+        // private String profilePic;
+        // private boolean isGoogle;
+        // private String accessToken;
+        // private String refreshToken;
         router.push("/home");
       } else {
         setErrorMessage("Unexpected response from server.");
