@@ -24,8 +24,7 @@ export default function loginPage() {
         /**
          * persist repsonse data for sessions
          */
-        // router.push("/home");
-        alert("working");
+        router.push("/home");
       } else {
         setErrorMessage("Unexpected response from server.");
       }
@@ -39,8 +38,7 @@ export default function loginPage() {
   }
 
   async function handleContinueWithGoogle() {
-    //  Do nothing for now
-    return;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`;
   }
 
   return (

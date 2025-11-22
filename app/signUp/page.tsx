@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import authStyles from '../styles/auth.module.css';
@@ -28,8 +28,7 @@ export default function signUpPage() {
         /**
          * persist repsonse data for sessions
          */
-        // router.push("/home");
-        alert("working");
+        router.push("/home");
       } else {
         setErrorMessage("Unexpected response from server.");
       }
@@ -44,7 +43,7 @@ export default function signUpPage() {
   }
 
   async function handleContinueWithGoogle() {
-    return;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`;
   }
 
   return (
