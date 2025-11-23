@@ -11,6 +11,12 @@ export default function AuthCallback() {
   const { setUser } = useUser();
 
   useEffect(() => {
+    const error = searchParams.get("error");
+    if (error) {
+      router.push(`/login?error=${encodeURIComponent(error)}`);
+      return;
+    }
+
     const name = decodeURIComponent(searchParams.get("name") || "");
     const email = decodeURIComponent(searchParams.get("email") || "");
     const profilePic = decodeURIComponent(searchParams.get("profilePic") || "");
@@ -30,7 +36,8 @@ export default function AuthCallback() {
       setUser(userData);
       router.push("/home");
     } else {
-      router.push("/login?error=Authentication failed. Please try again.");
+      const message = searchParams.get("message") || "Authentication failed. Please try again.";
+      router.push(`/login?error=${encodeURIComponent(message)}`);
     }
   }, [searchParams, router, setUser]);
 
