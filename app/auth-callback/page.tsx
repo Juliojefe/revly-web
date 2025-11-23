@@ -23,6 +23,8 @@ export default function AuthCallback() {
     const isGoogle = searchParams.get("isGoogle") === "true";
     const accessToken = searchParams.get("accessToken");
     const refreshToken = searchParams.get("refreshToken");
+    const isAdmin = searchParams.get("isAdmin") === "true";
+    const isMechanic = searchParams.get("isMechanic") === "true";
 
     if (name && email && accessToken && refreshToken) {
       const userData = {
@@ -32,6 +34,8 @@ export default function AuthCallback() {
         isGoogle,
         accessToken,
         refreshToken,
+        isAdmin,
+        isMechanic,
       };
       setUser(userData);
       router.push("/home");

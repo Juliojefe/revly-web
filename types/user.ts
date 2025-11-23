@@ -5,4 +5,6 @@ export interface User {
   isGoogle: boolean;
   accessToken: string;
   refreshToken: string;
+  isAdmin: boolean;
+  isMechanic: boolean;
 }
