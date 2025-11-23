@@ -36,6 +36,8 @@ export default function signUpPage() {
           isGoogle: authData.isGoogle,
           accessToken: authData.accessToken,
           refreshToken: authData.refreshToken,
+          isAdmin: authData.isAdmin,
+          isMechanic: authData.isMechanic,
         });
         router.push("/home");
       } else {

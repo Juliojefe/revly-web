@@ -32,6 +32,8 @@ export default function loginPage() {
           isGoogle: authData.isGoogle,
           accessToken: authData.accessToken,
           refreshToken: authData.refreshToken,
+          isAdmin: authData.isAdmin,
+          isMechanic: authData.isMechanic,
         });
         router.push("/home");
       } else {
