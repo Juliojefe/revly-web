@@ -30,7 +30,13 @@
 }
 
 .icon:hover {
-  color: white;
+  color: #FFAA33;
+  transform: translateY(-2px);
+  font-size: 25px;
+}
+
+.icon:active {
+  color: #F2B76D;
   transform: translateY(-2px);
   font-size: 25px;
 }
