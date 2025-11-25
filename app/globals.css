@@ -21,16 +21,15 @@
 
 .appShell {
   display: flex;
-  flex-direction: row;
-  height: 100vh;
-  overflow: hidden;
 }
 
 main {
+  margin-left: 40px; /* same width as sidebar important*/
   flex: 1;
-  height: 100%;
+  min-height: 100vh;
   overflow-y: auto;
 }
+
 
 
 body {
