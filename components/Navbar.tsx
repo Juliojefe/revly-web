@@ -18,7 +18,7 @@ export default function Navbar() {
       <FaUser className={styles.icon} onClick={async () => router.push("/myProfile")} />
       <FaCompass className={styles.icon} onClick={async () => router.push("/explore")}/>
       <FaPlusSquare className={styles.icon} onClick={doNothing}/>
-      <FaBell className={styles.icon} />
+      <FaBell className={styles.icon} onClick={doNothing}/>
     </nav>
   );
 }
