@@ -21,16 +21,21 @@
 
 .appShell {
   display: flex;
+  height: 100vh;
 }
 
 main {
-  margin-left: 40px; /* same width as sidebar important*/
   flex: 1;
-  min-height: 100vh;
+  margin-left: 40px;
   overflow-y: auto;
+  /* Hide scrollbar (Chrome, Safari, Edge) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
 }
 
-
+main::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
 
 body {
   background: var(--background);
