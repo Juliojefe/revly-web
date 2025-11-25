@@ -98,8 +98,11 @@ export default function signUpPage() {
               onChange={e => setConfirmPassword(e.target.value)}
             />
           </label>
+          <h3 className={authStyles.formSubHeader}>New?</h3>
           <button className={authStyles.primaryBtn} type="submit"> SignUp </button>
+          <h3 className={authStyles.formSubHeader}>Already have an account?</h3>
           <button className={authStyles.secondaryBtn} type="button" onClick={async () => router.push("/login")}> Login </button>
+          <h3 className={authStyles.formSubHeader}>Or</h3>
           <button
             className={authStyles.googleBtn}
             type="button"
