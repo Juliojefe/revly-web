@@ -38,7 +38,10 @@ export default function explore() {
 
   return (
     <div className={styles.container}>
-      <h2>My explore Page</h2>
+      <div className={styles.postContentContainer}>
+        <h2>My explore Page</h2>
+        <h2>Another thing real quick</h2>
+      </div>
     </div>
   );
 }
