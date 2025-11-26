@@ -1,4 +1,25 @@
 .container {
   background: #d2def9;
   color: black;
+  border-top: solid 4px black;
+  border-bottom: solid 4px black;
+  border-right: solid 4px black;
+  height: 100%;
+}
+
+.postContentContainer {
+  background: white;
+  border-left: solid 4px black;
+  border-right: solid 4px black;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin-left: 100px;
+  margin-right: 100px;
+  justify-content: flex-start;
+  height: 100%;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
