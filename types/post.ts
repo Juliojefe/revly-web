@@ -1,4 +1,4 @@
-export interface Post {
+export interface PostType {
   authorId: number;
   description: string;
   createdBy: string;
