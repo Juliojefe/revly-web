@@ -6,6 +6,7 @@ import { useUser } from '@/context/UserContext';
 import { PostType } from '@/types/post';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Post from '@/components/Post';
 
 
 export default function explore() {
@@ -21,24 +22,27 @@ export default function explore() {
 
   useEffect(() => {  // Load posts when the page loads
     async function fetchPosts() {
+      const newPosts: PostType[] = [];
       for (const id of testPostIds) {
         try {
           const rawPost = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${id}`);
-          postData.push(rawPost.data);
+          newPosts.push(rawPost.data);
         } catch (err) {
           console.error(`Failed to fetch post ${id}`, err);
         }
       }
-      setPostData(postData);
-      // console.log(postData);
+      setPostData(newPosts);
     }
-      fetchPosts();
-    }, []);
+    fetchPosts();
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.postContentContainer}>
-        <h2>My explore Page</h2>
+        <h2>My Explore Page</h2>
+        {postData.map((post) => (
+          <Post key={post.postId} postData={post} />
+        ))}
       </div>
     </div>
   );

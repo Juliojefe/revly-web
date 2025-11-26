@@ -33,6 +33,21 @@ export default function Post({ postData = null }: PostProps) {
     return;
   }
 
+  function handleLike() {
+    //  TODO
+    return;
+  }
+
+  function handleComments() {
+    //  TODO
+    return;
+  }
+
+  function handleSave() {
+    //  TODO
+    return;
+  }
+
   return (
     <div>
       {/* header section */}
@@ -56,9 +71,9 @@ export default function Post({ postData = null }: PostProps) {
       <p>{postData.likeCount || 0} likes</p>
       {/* like comment save icons */}
       <div>
-        <FaRegHeart />
-        <FaRegComment />
-        <FaRegBookmark />
+        <FaRegHeart onClick={() => handleLike()}/>
+        <FaRegComment onClick={() => handleComments()}/>
+        <FaRegBookmark onClick={() => handleSave()}/>
       </div>
       {/* description section */}
       <p>{postData.description || ""}</p>

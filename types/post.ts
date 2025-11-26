@@ -1,4 +1,5 @@
 export interface PostType {
+  postId: number,
   authorId: number;
   description: string;
   createdBy: string;
