@@ -3,25 +3,29 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import authStyles from '../styles/auth.module.css';
+import authStyles from '../../styles/auth.module.css';
 import { useUser } from "@/context/UserContext";
 import GuestRoute from "@/components/GuestRoute";
 
 
-export default function loginPage() {
+export default function signUpPage() {
   const router = useRouter();
   const { setUser } = useUser();
+  const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();
     setErrorMessage("");
     try {
-      const responseData = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+      const responseData = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+        name: name,
         email: email,
-        password: password
+        password: password,
+        confirmPassword: confirmPassword
       });
       const authData = responseData.data;
       if (authData.accessToken) {
@@ -41,11 +45,12 @@ export default function loginPage() {
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
-        setErrorMessage(err.response.data.message || "Login Failed");
+        setErrorMessage(err.response.data.message || "Sign up Failed");
       } else {
         setErrorMessage("Network error");
       }
     }
+
   }
 
   async function handleContinueWithGoogle() {
@@ -55,8 +60,17 @@ export default function loginPage() {
   return (
     <GuestRoute>
       <div className={authStyles.container}>
-        <form className={authStyles.authForm} onSubmit={handleSubmit}>
-          <h2 className={authStyles.formHeader}>Login</h2>
+        <form className={authStyles.authForm} onSubmit={handleSignUp}>
+          <h2 className={authStyles.formHeader}>Sign Up</h2>
+          <label className={authStyles.formLabel}>Full Name
+            <input
+              type="text"
+              value={name}
+              required
+              className={authStyles.formInput}
+              onChange={e => setName(e.target.value)}
+            />
+          </label>
           <label className={authStyles.formLabel}>Email
             <input
               type="email"
@@ -75,8 +89,20 @@ export default function loginPage() {
               onChange={e => setPassword(e.target.value)}
             />
           </label>
-          <button className={authStyles.primaryBtn} type="submit">Login</button>
-          <button className={authStyles.secondaryBtn} type="button" onClick={async () => router.push("/signUp")}> Create Account </button>
+          <label className={authStyles.formLabel}>Confirm Password
+            <input
+              type="password"
+              value={confirmPassword}
+              required
+              className={authStyles.formInput}
+              onChange={e => setConfirmPassword(e.target.value)}
+            />
+          </label>
+          <h3 className={authStyles.formSubHeader}>New?</h3>
+          <button className={authStyles.primaryBtn} type="submit"> SignUp </button>
+          <h3 className={authStyles.formSubHeader}>Already have an account?</h3>
+          <button className={authStyles.secondaryBtn} type="button" onClick={async () => router.push("/login")}> Login </button>
+          <h3 className={authStyles.formSubHeader}>Or</h3>
           <button
             className={authStyles.googleBtn}
             type="button"

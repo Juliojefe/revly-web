@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #a6343b;
-  --foreground: white;
+  --background: #d2def9;
+  --foreground: black;
 }
 
 @theme inline {
@@ -14,11 +14,27 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --background: #23221f;
-    --foreground: #cacbcb; */
-    --background: #a6343b;
-    --foreground: white;
+  --background: #d2def9;
+  --foreground: black;
   }
+}
+
+.appShell {
+  display: flex;
+  height: 100vh;
+}
+
+main {
+  flex: 1;
+  margin-left: 40px;
+  overflow-y: auto;
+  /* Hide scrollbar (Chrome, Safari, Edge) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+main::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 body {

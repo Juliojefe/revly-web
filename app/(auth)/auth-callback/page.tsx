@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import styles from '../styles/loading.module.css';
+import styles from '../../styles/loading.module.css';
 import { useUser } from "@/context/UserContext";
 
 export default function AuthCallback() {
