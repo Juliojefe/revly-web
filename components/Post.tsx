@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useState } from "react";
-import { FaHeart, FaRegHeart, FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaRegComment, FaRegBookmark, FaBookmark, FaChevronLeft,FaChevronRight } from "react-icons/fa";
 import { useUser } from '../context/UserContext';
 import { useRouter } from "next/navigation";
 import { PostType } from '@/types/post';
+import styles from '../app/styles/post.module.css'
 
 interface PostProps {
   postData?: PostType | null;
@@ -26,7 +27,7 @@ export default function Post({ postData = null }: PostProps) {
   function handleShowNextImage() {
     //  TODO
     return;
-  } 
+  }
 
   function handleShowPrevImage() {
     //  TODO
@@ -49,34 +50,58 @@ export default function Post({ postData = null }: PostProps) {
   }
 
   return (
-    <div>
+    <div className={styles.postContainer}>
       {/* header section */}
-      <div onClick={() => handleGoToProfile(postData.authorId)}>
-        <p>{postData.createdBy}</p>
-        <img src={postData.createdByProfilePicUrl} alt="profile picture" />
+      <div
+        className={styles.headerSection}
+        onClick={() => handleGoToProfile(postData.authorId)}
+      >
+        <img
+          className={styles.profilePic}
+          src={postData.createdByProfilePicUrl}
+          alt="profile picture"
+        />
+        <p className={styles.userName}>{postData.createdBy}</p>
       </div>
       {/* image section */}
-      <div>
+      <div className={styles.imageSection}>
         {postData.imageUrls?.[0] && (
-          <img src={postData.imageUrls[0]} alt="post image" />
+          <img
+            className={styles.postImage}
+            src={postData.imageUrls[currImageIndex]}
+            alt="post image"
+          />
         )}
-        {(postData.imageUrls.length > 1) && (currImageIndex != postData.imageUrls.length -1) && (
-          <button onClick={() => handleShowNextImage()} />
+        {postData.imageUrls.length > 1 && currImageIndex > 0 && (
+          <button className={styles.prevImageButton} onClick={handleShowPrevImage}>
+            <FaChevronLeft />
+          </button>
         )}
-        {(postData.imageUrls.length > 1) && (currImageIndex > 0) && (
-          <button onClick={() => handleShowPrevImage} />
+        {postData.imageUrls.length > 1 && currImageIndex < postData.imageUrls.length - 1 && (
+          <button className={styles.nextImageButton} onClick={handleShowNextImage}>
+            <FaChevronRight />
+          </button>
         )}
       </div>
-      {/* like count  */}
-      <p>{postData.likeCount || 0} likes</p>
+      {/* like count */}
+      <p className={styles.likeCount}>{postData.likeCount || 0} likes</p>
       {/* like comment save icons */}
-      <div>
-        <FaRegHeart onClick={() => handleLike()}/>
-        <FaRegComment onClick={() => handleComments()}/>
-        <FaRegBookmark onClick={() => handleSave()}/>
+      <div className={styles.actionIcons}>
+        <FaRegHeart
+          className={styles.icon}
+          onClick={() => handleLike()}
+        />
+        <FaRegComment
+          className={styles.icon}
+          onClick={() => handleComments()}
+        />
+        <FaRegBookmark
+          className={styles.icon}
+          onClick={() => handleSave()}
+        />
       </div>
       {/* description section */}
-      <p>{postData.description || ""}</p>
+      <p className={styles.postDescription}>{postData.description || ""}</p>
     </div>
   );
 }

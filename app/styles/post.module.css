@@ -1,0 +1,90 @@
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 1200px;
+  border: solid 2px black;
+}
+
+.headerSection {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px
+}
+
+.userName {
+  font-size: small;
+}
+
+.profilePic {
+  width: 30px;
+  height: 30px;
+  border-radius: 90;
+  margin-left: 10px;
+}
+
+.imageSection {
+  position: relative; /* required for next/prev buttons */
+  width: 100%;
+}
+
+.postImage {
+  width: fit-content;
+  height: fit-content;
+}
+
+.nextImageButton,
+.prevImageButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nextImageButton:hover,
+.prevImageButton:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.prevImageButton {
+  left: 10px;
+}
+
+.nextImageButton {
+  right: 10px;
+}
+
+.likeCount {
+  font-size: small;
+}
+
+.actionIcons {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon {
+  font-size: small;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.icon:hover {
+  color: black;
+}
+
+.postDescription {
+  font-size: small;
+}
