@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import { FaHeart, FaRegHeart, FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaRegComment, FaRegBookmark, FaBookmark, FaChevronLeft,FaChevronRight } from "react-icons/fa";
 import { useUser } from '../context/UserContext';
 import { useRouter } from "next/navigation";
 import { PostType } from '@/types/post';
@@ -56,34 +56,31 @@ export default function Post({ postData = null }: PostProps) {
         className={styles.headerSection}
         onClick={() => handleGoToProfile(postData.authorId)}
       >
-        <p className={styles.userName}>{postData.createdBy}</p>
         <img
           className={styles.profilePic}
           src={postData.createdByProfilePicUrl}
           alt="profile picture"
         />
+        <p className={styles.userName}>{postData.createdBy}</p>
       </div>
       {/* image section */}
       <div className={styles.imageSection}>
         {postData.imageUrls?.[0] && (
           <img
             className={styles.postImage}
-            src={postData.imageUrls[0]}
+            src={postData.imageUrls[currImageIndex]}
             alt="post image"
           />
         )}
-        {postData.imageUrls.length > 1 &&
-          currImageIndex !== postData.imageUrls.length - 1 && (
-            <button
-              className={styles.nextImageButton}
-              onClick={() => handleShowNextImage()}
-            />
-          )}
         {postData.imageUrls.length > 1 && currImageIndex > 0 && (
-          <button
-            className={styles.prevImageButton}
-            onClick={() => handleShowPrevImage()}
-          />
+          <button className={styles.prevImageButton} onClick={handleShowPrevImage}>
+            <FaChevronLeft />
+          </button>
+        )}
+        {postData.imageUrls.length > 1 && currImageIndex < postData.imageUrls.length - 1 && (
+          <button className={styles.nextImageButton} onClick={handleShowNextImage}>
+            <FaChevronRight />
+          </button>
         )}
       </div>
       {/* like count */}
@@ -91,15 +88,15 @@ export default function Post({ postData = null }: PostProps) {
       {/* like comment save icons */}
       <div className={styles.actionIcons}>
         <FaRegHeart
-          className={styles.likeIcon}
+          className={styles.icon}
           onClick={() => handleLike()}
         />
         <FaRegComment
-          className={styles.commentIcon}
+          className={styles.icon}
           onClick={() => handleComments()}
         />
         <FaRegBookmark
-          className={styles.saveIcon}
+          className={styles.icon}
           onClick={() => handleSave()}
         />
       </div>
