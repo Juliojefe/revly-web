@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { User } from "@/types/user";
+import AuthLoading from "@/components/AuthLoading";
 
 interface UserContextType {
   user: User | null;
@@ -13,6 +14,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Load from localStorage on app start
   useEffect(() => {
@@ -24,6 +26,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem("user");
       }
     }
+    setIsLoaded(true);
   }, []);
 
   // Wrapper so we sync context + localStorage
@@ -39,6 +42,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(() => {
     setUser(null);
   }, [setUser]);
+
+  if (!isLoaded) {
+    return <AuthLoading />;  // Prevent children from rendering until loaded
+  }
 
   return (
     <UserContext.Provider value={{ user, setUser, logout }}>
