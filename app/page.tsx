@@ -21,5 +21,4 @@ export default function Home() {
   }, [user, router]);
 
   if (checking) return <AuthLoading/>;
-  // return <AuthLoading/>
 }
