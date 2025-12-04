@@ -1,9 +1,7 @@
 .container {
   background: #d2def9;
   color: black;
-  border-top: solid 4px black;
-  border-bottom: solid 4px black;
-  border-right: solid 4px black;
+  border: 4px solid black;
   height: 100%;
 }
 
