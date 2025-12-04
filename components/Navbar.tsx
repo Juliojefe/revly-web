@@ -1,6 +1,6 @@
 'use client';
 
-import { FaHome, FaCompass, FaPlusSquare, FaBell, FaUser, FaEnvelope, FaSearch } from "react-icons/fa";
+import { FaHome, FaCompass, FaPlusSquare, FaBell, FaUser } from "react-icons/fa";
 import styles from '../app/styles/navbar.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -9,31 +9,41 @@ export default function Navbar() {
   const pathname = usePathname();
 
   function doNothing() {
-    return; //  for now do nothing
+    return;
   }
 
   return (
     <nav className={styles.navbar}>
-      <FaHome
-        className={`${styles.icon} ${pathname === '/home' ? styles.active : ''}`}
-        onClick={async () => router.push("/home")}
-      />
-      <FaUser
-        className={`${styles.icon} ${pathname === '/myProfile' ? styles.active : ''}`}
-        onClick={async () => router.push("/myProfile")}
-      />
-      <FaCompass
-        className={`${styles.icon} ${pathname === '/explore' ? styles.active : ''}`}
-        onClick={async () => router.push("/explore")}
-      />
-      <FaPlusSquare
-        className={styles.icon}
-        onClick={doNothing}
-      />
-      <FaBell
-        className={styles.icon}
-        onClick={doNothing}
-      />
+
+      <div 
+        className={`${styles.iconWrapper} ${pathname === '/home' ? styles.active : ''}`}
+        onClick={() => router.push("/home")}
+      >
+        <FaHome className={styles.icon} />
+      </div>
+
+      <div 
+        className={`${styles.iconWrapper} ${pathname === '/myProfile' ? styles.active : ''}`}
+        onClick={() => router.push("/myProfile")}
+      >
+        <FaUser className={styles.icon} />
+      </div>
+
+      <div 
+        className={`${styles.iconWrapper} ${pathname === '/explore' ? styles.active : ''}`}
+        onClick={() => router.push("/explore")}
+      >
+        <FaCompass className={styles.icon} />
+      </div>
+
+      <div className={styles.iconWrapper} onClick={doNothing}>
+        <FaPlusSquare className={styles.icon} />
+      </div>
+
+      <div className={styles.iconWrapper} onClick={doNothing}>
+        <FaBell className={styles.icon} />
+      </div>
+
     </nav>
   );
 }
