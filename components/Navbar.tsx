@@ -20,6 +20,7 @@ export default function Navbar() {
         onClick={() => router.push("/home")}
       >
         <FaHome className={styles.icon} />
+        <p>Home</p>
       </div>
 
       <div 
@@ -27,6 +28,7 @@ export default function Navbar() {
         onClick={() => router.push("/myProfile")}
       >
         <FaUser className={styles.icon} />
+        <p>Profile</p>
       </div>
 
       <div 
@@ -34,14 +36,17 @@ export default function Navbar() {
         onClick={() => router.push("/explore")}
       >
         <FaCompass className={styles.icon} />
+        <p>Explore</p>
       </div>
 
       <div className={styles.iconWrapper} onClick={doNothing}>
         <FaPlusSquare className={styles.icon} />
+        <p>Create</p>
       </div>
 
       <div className={styles.iconWrapper} onClick={doNothing}>
         <FaBell className={styles.icon} />
+        <p>Notifs</p>
       </div>
 
     </nav>

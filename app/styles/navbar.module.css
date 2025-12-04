@@ -33,6 +33,7 @@
 
 .iconWrapper.active {
   background-color: white;
+  color: #526fae;
 }
 
 .iconWrapper.active .icon {
@@ -46,6 +47,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 2px;
 }
 
 .icon {
