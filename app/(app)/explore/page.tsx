@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from "./explore.module.css";
 import { useUser } from '@/context/UserContext';
 import { PostType } from '@/types/post';
-import { useEffect, useState, useRef } from 'react';  // Add useRef
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PostList from '@/components/PostList';
 
@@ -15,8 +15,9 @@ export default function explore() {
   const [currPage, setCurrPage] = useState(0);
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);
+  const [loading, setLoading] = useState(false);
   const pageSize = 5;
-  const hasFetched = useRef(false);  // Add this ref
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   async function handleLogout() {
     logout();
@@ -24,16 +25,23 @@ export default function explore() {
   }
 
   useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-    console.log("useEffect fired");
-    fetchPosts();
-  }, []);
+    if (!loaderRef.current) return;
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !loading && !last) {
+        fetchPosts();
+      }
+    });
+    observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [loading, last]);
 
   async function fetchPosts() {
-    if (last) return;
+    if (loading || last) return;
+    setLoading(true);
     try {
       if (user) {
+        console.log(`User endpoint hit for user: ${user.name}`);
+        console.log(currPage);
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint, {
@@ -48,6 +56,8 @@ export default function explore() {
           console.error("Failed to fetch posts (authenticated user)", err);
         }
       } else {
+        console.log("Guest endpoint hit");
+        console.log(currPage);
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore/guest?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint);
@@ -62,6 +72,8 @@ export default function explore() {
       }
     } catch (err) {
       console.error("Unexpected error in fetchPosts", err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -70,6 +82,7 @@ export default function explore() {
       <div className={styles.postContentContainer}>
         <h2>My Explore Page</h2>
         <PostList postDataArray={postData} />
+        {!last && <div ref={loaderRef} />}
       </div>
     </div>
   );
