@@ -32,10 +32,10 @@ export default function explore() {
 
   async function fetchPosts() {
     if (last) return;
-
     try {
       if (user) {
-        const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/post/explore?page=${currPage}&size=${pageSize}`;
+        // const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore/?page=${currPage}&size=${pageSize}`;
+        const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint, {
             headers: { Authorization: `Bearer ${user.accessToken}` },
@@ -45,13 +45,11 @@ export default function explore() {
           setLast(page.last);
           setCurrPage(page.number + 1);
           setPostData(prev => [...prev, ...page.content]);
-          console.log(user);
-          console.log(page.content);
         } catch (err) {
           console.error("Failed to fetch posts (authenticated user)", err);
         }
       } else {
-        const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/post/explore/guest?page=${currPage}&size=${pageSize}`;
+        const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore/guest?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint);
           const page = res.data;
