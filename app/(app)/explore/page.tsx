@@ -47,8 +47,6 @@ export default function explore() {
     setLoading(true);
     try {
       if (user) {
-        console.log(`User endpoint hit for user: ${user.name}`);
-        console.log(currPage);
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint, {
@@ -63,8 +61,6 @@ export default function explore() {
           console.error("Failed to fetch posts (authenticated user)", err);
         }
       } else {
-        console.log("Guest endpoint hit");
-        console.log(currPage);
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore/guest?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint);
