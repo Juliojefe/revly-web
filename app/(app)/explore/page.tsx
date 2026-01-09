@@ -12,20 +12,27 @@ export default function explore() {
   const router = useRouter();
   const { user, logout } = useUser();
   const [postData, setPostData] = useState<PostType[]>([]);
-  const [currPage, setCurrPage] = useState(0);
+  const [currPage, setCurrPage] = useState(8);
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userLoaded, setUserLoaded] = useState(false);
   const pageSize = 5;
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  async function handleLogout() {
+  useEffect(() => {
+    if (user !== undefined) {
+      setUserLoaded(true);
+    }
+  }, [user]);
+
+  async function handleLogout() { //  no current use but there will be one in the future
     logout();
     router.push("/login");
   }
 
   useEffect(() => {
-    if (!loaderRef.current) return;
+    if (!loaderRef.current || !userLoaded) return;
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && !loading && !last) {
         fetchPosts();
@@ -33,7 +40,7 @@ export default function explore() {
     });
     observer.observe(loaderRef.current);
     return () => observer.disconnect();
-  }, [loading, last]);
+  }, [loading, last, userLoaded]);
 
   async function fetchPosts() {
     if (loading || last) return;
@@ -75,6 +82,10 @@ export default function explore() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!userLoaded) {
+    return <div>Loading...</div>; //  Stylize in the future
   }
 
   return (
