@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fixit",
+  title: "Revly",
   description: "By car people for car people",
 };
 
