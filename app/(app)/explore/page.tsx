@@ -34,7 +34,6 @@ export default function explore() {
     if (last) return;
     try {
       if (user) {
-        // const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore/?page=${currPage}&size=${pageSize}`;
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint, {
