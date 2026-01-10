@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from '../../styles/loading.module.css';
-import { useUser } from "@/context/UserContext";
+import { useUser } from "../../providers/UserProvider";
 
 export default function AuthCallback() {
   const router = useRouter();

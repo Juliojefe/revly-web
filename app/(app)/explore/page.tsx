@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import styles from "./explore.module.css";
-import { useUser } from '@/context/UserContext';
+import { useUser } from '../../providers/UserProvider';
 import { PostType } from '@/types/post';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
@@ -12,7 +12,7 @@ export default function explore() {
   const router = useRouter();
   const { user, logout } = useUser();
   const [postData, setPostData] = useState<PostType[]>([]);
-  const [currPage, setCurrPage] = useState(8);
+  const [currPage, setCurrPage] = useState(0);
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -47,6 +47,7 @@ export default function explore() {
     setLoading(true);
     try {
       if (user) {
+        console.log(`Fetching posts for user: ${user.name} on page: ${currPage}`);
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint, {
@@ -61,6 +62,7 @@ export default function explore() {
           console.error("Failed to fetch posts (authenticated user)", err);
         }
       } else {
+        console.log(`Fetching posts for guest on page: ${currPage}`);
         const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/explore/guest?page=${currPage}&size=${pageSize}`;
         try {
           const res = await axios.get(endpoint);

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import AuthLoading from "@/components/AuthLoading";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "./providers/UserProvider";
 
 export default function Home() {
   const { user } = useUser();
