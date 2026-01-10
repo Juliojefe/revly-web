@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
+import { useUser } from '@/app/providers/UserProvider';
 import AuthLoading from "@/components/AuthLoading";
 
 interface GuestRouteProps {
