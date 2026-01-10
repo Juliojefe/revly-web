@@ -5,7 +5,7 @@ import AuthLoading from "@/components/AuthLoading/AuthLoading";
 import { useRouter } from "next/navigation";
 import { useUser } from "./providers/UserProvider";
 
-export default function Home() {
+export default function Gatekeeper() {
   const { user } = useUser();
   const router = useRouter();
   const [checking, setChecking] = useState(true);

@@ -5,7 +5,7 @@ import styles from './home.module.css';
 import { useUser } from '../../providers/UserProvider';
 
 
-export default function AuthCallback() {
+export default function Home() {
   const router = useRouter();
   const { user, logout } = useUser();
 
