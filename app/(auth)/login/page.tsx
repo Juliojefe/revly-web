@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import authStyles from '../../styles/auth.module.css';
 import { useUser } from "../../providers/UserProvider";
-import GuestRoute from "@/components/GuestRoute";
+import GuestRoute from "@/components/GuestRoute/GuestRoute";
 
 
 export default function loginPage() {

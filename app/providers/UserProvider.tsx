@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { User } from "@/types/user";
-import AuthLoading from "@/components/AuthLoading";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 interface UserContextType {
   user: User | null;

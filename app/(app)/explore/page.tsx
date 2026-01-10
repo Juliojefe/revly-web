@@ -6,7 +6,7 @@ import { useUser } from '../../providers/UserProvider';
 import { PostType } from '@/types/post';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import PostList from '@/components/PostList';
+import PostList from '@/components/PostList/PostList';
 
 export default function explore() {
   const router = useRouter();

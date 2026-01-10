@@ -1,7 +1,7 @@
 'use client';
 
 import { FaHome, FaCompass, FaPlusSquare, FaBell, FaUser } from "react-icons/fa";
-import styles from '@/app/styles/navbar.module.css';
+import styles from "./navbar.module.css";
 import { useRouter, usePathname } from 'next/navigation';
 
 export default function Navbar() {

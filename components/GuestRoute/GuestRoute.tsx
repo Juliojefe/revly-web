@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from '@/app/providers/UserProvider';
-import AuthLoading from "@/components/AuthLoading";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 interface GuestRouteProps {
   children: ReactNode;
