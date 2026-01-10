@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import styles from "./myProfile.module.css";
-import { useUser } from '@/context/UserContext';
+import { useUser } from '../../providers/UserProvider';
 
 export default function myProfile() {
   return (

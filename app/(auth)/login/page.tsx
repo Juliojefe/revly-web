@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import authStyles from '../../styles/auth.module.css';
-import { useUser } from "@/context/UserContext";
-import GuestRoute from "@/components/GuestRoute";
+import { useUser } from "../../providers/UserProvider";
+import GuestRoute from "@/components/GuestRoute/GuestRoute";
 
 
 export default function loginPage() {

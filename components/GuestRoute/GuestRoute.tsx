@@ -2,8 +2,8 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
-import AuthLoading from "@/components/AuthLoading";
+import { useUser } from '@/app/providers/UserProvider';
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 interface GuestRouteProps {
   children: ReactNode;

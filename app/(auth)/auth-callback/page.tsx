@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import styles from '../../styles/loading.module.css';
-import { useUser } from "@/context/UserContext";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
+import { useUser } from "../../providers/UserProvider";
 
 export default function AuthCallback() {
   const router = useRouter();
@@ -46,9 +46,6 @@ export default function AuthCallback() {
   }, [searchParams, router, setUser]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.spinner}></div>
-      <p className={styles.text}>Loading…</p>
-    </div>
+    <AuthLoading message="Logging you in…" />
   );
 }

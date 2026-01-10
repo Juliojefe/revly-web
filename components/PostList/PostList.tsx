@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { PostType } from '@/types/post';
-import Post from '@/components/Post';
+import Post from '@/components/Post/Post';
 
 interface PostListProps {
   postDataArray?: PostType[];

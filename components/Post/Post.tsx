@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { FaHeart, FaRegHeart, FaRegComment, FaRegBookmark, FaBookmark, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useUser } from '../context/UserContext';
+import { useUser } from '@/app/providers/UserProvider';
 import { useRouter } from "next/navigation";
 import { PostType } from '@/types/post';
-import styles from '../app/styles/post.module.css'
+import styles from "./Post.module.css";
 
 interface PostProps {
   postData?: PostType | null;
