@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import styles from "./explore.module.css";
 import { useUser } from '../../providers/UserProvider';
-import { PostType } from '@/types/post';
+import { DisplayPostType } from '@/types/displayPost';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PostList from '@/components/PostList/PostList';
@@ -11,7 +11,7 @@ import PostList from '@/components/PostList/PostList';
 export default function explore() {
   const router = useRouter();
   const { user, logout } = useUser();
-  const [postData, setPostData] = useState<PostType[]>([]);
+  const [postData, setPostData] = useState<DisplayPostType[]>([]);
   const [currPage, setCurrPage] = useState(0);
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);

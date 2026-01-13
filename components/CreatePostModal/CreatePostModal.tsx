@@ -14,6 +14,8 @@ type CreatePostModalProps = {
 export default function CreatePostModal({ onClose }: CreatePostModalProps) {
   const { user } = useUser();
   const router = useRouter();
+  const [postDataResponse, setPostDataResponse] = useState<DisplayPostType[]>([]);
+  const [postDataRequest, setPostDataRequest] = useState<CreatePostType[]>([]);
 
   function doNothing() {
     return;
