@@ -4,12 +4,18 @@ import { FaHome, FaCompass, FaPlusSquare, FaBell, FaUser } from "react-icons/fa"
 import styles from "./navbar.module.css";
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import { useRouter, usePathname } from 'next/navigation';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from 'react-dom';
 
 export default function Navbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   function doNothing() {
     return;
@@ -55,6 +61,12 @@ export default function Navbar() {
         <FaBell className={styles.icon} />
         <p>Notifs</p>
       </div>
+
+      {/* Render modal via portal if open and on client */}
+      {isClient && isModalOpen && createPortal(
+        <CreatePostModal onClose={() => setIsModalOpen(false)} />,
+        document.body  // Appends directly to <body>
+      )}
     </nav>
   );
 }
