@@ -1,5 +1,5 @@
 .backdrop {
-position: fixed;
+  position: fixed;
   inset: 0;
   min-height: 100vh;
   display: flex;
@@ -27,6 +27,35 @@ position: fixed;
   text-align: center;
 }
 
+.formSubHeader {
+  color: black;
+  font-size: small;
+  margin-bottom: -1rem;
+}
+
+.loadingUser {
+  text-align: center;
+  color: black;
+  font-size: large;
+  margin-bottom: -1rem;
+}
+
+.secondaryBtn {
+  padding: 0.7rem;
+  font-weight: bold;
+  background: white;
+  color: #222;
+  border: 2px solid black;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.secondaryBtn:hover {
+  background-color: #acb2c3;
+  color: white;
+}
+
 .primaryBtn {
   padding: 0.7rem;
   font-weight: bold;
@@ -40,4 +69,16 @@ position: fixed;
 
 .primaryBtn:hover {
   background: #739cf3;
+}
+
+.dots::after {
+  content: "";
+  animation: dots 1.4s infinite;
+}
+
+@keyframes dots {
+  0%   { content: ""; }
+  33%  { content: "."; }
+  66%  { content: ".."; }
+  100% { content: "..."; }
 }
