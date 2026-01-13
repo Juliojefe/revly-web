@@ -3,6 +3,8 @@ import styles from "./CreatePostModal.module.css";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { useUser } from "../../app/providers/UserProvider";
+import { CreatePostType } from "@/types/createPost";
+import { DisplayPostType } from "@/types/displayPost";
 
 
 type CreatePostModalProps = {
@@ -12,7 +14,8 @@ type CreatePostModalProps = {
 export default function CreatePostModal({ onClose }: CreatePostModalProps) {
   const { user } = useUser();
   const router = useRouter();
-  const [checking, setChecking] = useState(true);
+  const [postDataResponse, setPostDataResponse] = useState<DisplayPostType[]>([]);
+  const [postDataRequest, setPostDataRequest] = useState<CreatePostType[]>([]);
 
   function doNothing() {
     return;
