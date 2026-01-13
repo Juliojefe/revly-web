@@ -1,4 +1,5 @@
-export interface PostType {
+// used when displaying a post
+export interface DisplayPostType {
   postId: number,
   authorId: number;
   description: string;
