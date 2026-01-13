@@ -1,4 +1,6 @@
 // used when creating a post
 export interface CreatePostType {
-  //  TODO
+  description: string;
+  createdAt: Date;
+  images: File[];
 }

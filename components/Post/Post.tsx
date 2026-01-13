@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { FaHeart, FaRegHeart, FaRegComment, FaRegBookmark, FaBookmark, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useUser } from '@/app/providers/UserProvider';
 import { useRouter } from "next/navigation";
-import { PostType } from '@/types/post';
+import { DisplayPostType } from '@/types/displayPost';
 import styles from "./Post.module.css";
 
 interface PostProps {
-  postData?: PostType | null;
+  postData?: DisplayPostType | null;
 }
 
 export default function Post({ postData = null }: PostProps) {

@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useState } from "react";
-import { PostType } from '@/types/post';
+import { DisplayPostType } from '@/types/displayPost';
 import Post from '@/components/Post/Post';
 
 interface PostListProps {
-  postDataArray?: PostType[];
+  postDataArray?: DisplayPostType[];
 }
 
 export default function PostList({ postDataArray = [] }: PostListProps) {
