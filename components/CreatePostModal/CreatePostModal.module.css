@@ -90,3 +90,10 @@
   text-align: center;
   white-space: pre-line;
 }
+
+.successMessage {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  font-size: large;
+}

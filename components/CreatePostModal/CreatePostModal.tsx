@@ -33,7 +33,6 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErrorMessage("");
-
     try {
       setUploading(true);
       const formData = new FormData();
@@ -78,44 +77,50 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
         <div className={styles.modalForm}>
           <h3 className={styles.loadingUser}>Getting things ready<span className={styles.dots}></span></h3>
         </div>
-      ) : successfulUpload ? (
-          <h2 className={styles.successMessage}>{successMessage}</h2>
       ) : user ? (
         <form className={styles.modalForm} onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
-          <h2 className={styles.formHeader}>Create Post</h2>
-          
-          <textarea
-            name="description"
-            placeholder="Write a description..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            disabled={uploading}
-          />
+          {successfulUpload ? (
+            <h2 className={styles.successMessage}>{successMessage}</h2>
+          ) : (
+            <>
+              <h2 className={styles.formHeader}>Create Post</h2>
 
-          <input
-            type="file"
-            name="images"
-            accept="image/*"
-            multiple
-            onChange={(e) => setImages(Array.from(e.target.files ?? []))}
-            disabled={uploading}
-          />
+              <textarea
+                name="description"
+                placeholder="Write a description..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                disabled={uploading}
+              />
 
-          <button className={styles.primaryBtn}
-            type="submit"
-            disabled={uploading}
-          >Upload</button>
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                multiple
+                onChange={(e) => setImages(Array.from(e.target.files ?? []))}
+                disabled={uploading}
+              />
 
-          {uploading && (
-            <div className={styles.uploadingOverlay}>
-              <h3 className={styles.loadingUser}>
-                Uploading<span className={styles.dots}></span>
-              </h3>
-            </div>
-          )}
-          {errorMessage && (
-            <p className={styles.error}>{errorMessage}</p>
+              <button
+                className={styles.primaryBtn}
+                type="submit"
+                disabled={uploading}
+              >Upload</button>
+
+              {uploading && (
+                <div className={styles.uploadingOverlay}>
+                  <h3 className={styles.loadingUser}>
+                    Uploading<span className={styles.dots}></span>
+                  </h3>
+                </div>
+              )}
+
+              {errorMessage && (
+                <p className={styles.error}>{errorMessage}</p>
+              )}
+            </>
           )}
         </form>
       ) : ( //  guest user case
