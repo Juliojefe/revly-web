@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import styles from "./CreatePostModal.module.css";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
@@ -14,16 +14,25 @@ type CreatePostModalProps = {
 export default function CreatePostModal({ onClose }: CreatePostModalProps) {
   const { user } = useUser();
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [description, setDescription] = useState<string>('');
+  const [images, setImages] = useState<File[]>([]);
   const [postDataResponse, setPostDataResponse] = useState<DisplayPostType[]>([]);
-  const [postDataRequest, setPostDataRequest] = useState<CreatePostType[]>([]);
 
   function doNothing() {
     return;
   }
 
-  function handleSubmit() {
-    return;
-    //  TODO
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setErrorMessage("");
+
+    const payload: CreatePostType = {
+      description,
+      images,
+      createdAt: new Date(),
+    };
+    console.log(payload);
   }
 
   return (
@@ -31,17 +40,34 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
       className={styles.backdrop}
       onClick={user === undefined ? undefined : onClose}  // prevent closing modal while it is still loading
     >
-      {user === undefined ? (
+      {user === undefined ? ( //  loading user info case
         <div className={styles.modalForm}>
           <h3 className={styles.loadingUser}>Getting things ready<span className={styles.dots}></span></h3>
         </div>
-      ) : user ? (
-        <form className={styles.modalForm} onSubmit={handleSubmit}>
+      ) : user ? (  //  authenticated user present case
+        <form className={styles.modalForm} onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
           <h2 className={styles.formHeader}>Create Post</h2>
+          {/* Description */}
+          <textarea
+            name="description"
+            placeholder="Write a description..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          {/* Images */}
+          <input
+            type="file"
+            name="images"
+            accept="image/*"
+            multiple
+            onChange={(e) => setImages(Array.from(e.target.files ?? []))}
+            required
+          />
           <button className={styles.primaryBtn} type="submit">Upload</button>
         </form>
-      ) : (
-        <div className={styles.modalForm}>
+      ) : ( //  guest user case
+        <div className={styles.modalForm} onClick={(e) => e.stopPropagation()}>
           <h2 className={styles.formHeader}>You Must Be Signed In To Upload Posts</h2>
           <h3 className={styles.formSubHeader}>Already have an account?</h3>
           <button className={styles.primaryBtn} type="button" onClick={async () => router.push("/login")}> Login </button>
@@ -49,6 +75,7 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
           <button className={styles.secondaryBtn} type="button" onClick={async () => router.push("/signUp")}> Create Account </button>
         </div>
       )}
+      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
     </div>
   );
 }
