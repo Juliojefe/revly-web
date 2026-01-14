@@ -3,7 +3,6 @@ import styles from "./CreatePostModal.module.css";
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { useUser } from "../../app/providers/UserProvider";
-import { CreatePostType } from "@/types/createPost";
 
 type CreatePostModalProps = {
   onClose: () => void;
