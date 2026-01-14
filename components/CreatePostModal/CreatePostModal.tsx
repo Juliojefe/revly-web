@@ -4,8 +4,6 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { useUser } from "../../app/providers/UserProvider";
 import { CreatePostType } from "@/types/createPost";
-import { DisplayPostType } from "@/types/displayPost";
-
 
 type CreatePostModalProps = {
   onClose: () => void;
@@ -17,22 +15,44 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [description, setDescription] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
-  const [postDataResponse, setPostDataResponse] = useState<DisplayPostType[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [successfulUpload, setSuccessfulUpload] = useState(false);
 
-  function doNothing() {
-    return;
-  }
-
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErrorMessage("");
 
-    const payload: CreatePostType = {
-      description,
-      images,
-      createdAt: new Date(),
-    };
-    console.log(payload);
+    try {
+      setUploading(true);
+      const formData = new FormData();
+      formData.append("description", description);
+      formData.append("createdAt", new Date().toISOString());
+      for (let i = 0; i < images.length; i++) {
+        formData.append("requestImages", images[i]);
+      }
+      const rawResponse = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/post/create/images`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.accessToken}`,
+          },
+        }
+      );
+      const cookedData = rawResponse.data;
+      setSuccessfulUpload(cookedData.success);
+      if (!cookedData.success) {
+        setErrorMessage(cookedData.message ?? "Upload failed");
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        setErrorMessage(err.response.data.message || "Upload failed");
+      } else {
+        setErrorMessage("Network error");
+      }
+    } finally {
+      setUploading(false);
+    }
   }
 
   return (
@@ -40,7 +60,7 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
       className={styles.backdrop}
       onClick={user === undefined ? undefined : onClose}  // prevent closing modal while it is still loading
     >
-      {user === undefined ? ( //  loading user info case
+      { user === undefined ? ( //  loading user info case
         <div className={styles.modalForm}>
           <h3 className={styles.loadingUser}>Getting things ready<span className={styles.dots}></span></h3>
         </div>
@@ -62,9 +82,16 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
             accept="image/*"
             multiple
             onChange={(e) => setImages(Array.from(e.target.files ?? []))}
-            required
           />
           <button className={styles.primaryBtn} type="submit">Upload</button>
+          {uploading && ( //  uploading post
+            <div className={styles.uploadingOverlay}>
+              <h3 className={styles.loadingUser}>
+                Uploading<span className={styles.dots}></span>
+              </h3>
+            </div>
+          )}
+          {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         </form>
       ) : ( //  guest user case
         <div className={styles.modalForm} onClick={(e) => e.stopPropagation()}>
@@ -75,7 +102,6 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
           <button className={styles.secondaryBtn} type="button" onClick={async () => router.push("/signUp")}> Create Account </button>
         </div>
       )}
-      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
     </div>
   );
 }
