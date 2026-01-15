@@ -55,11 +55,6 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
         setErrorMessage(cookedData.message ?? "Upload failed");
       } else {
         setSuccessMessage(cookedData.message);
-        /**
-         * by setting successfulUpload to true the successmessage will pop up
-         * I want to lose the modal that is currently open (onClose) here and let the other open
-         * how do I?
-         */
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
@@ -112,15 +107,13 @@ export default function CreatePostModal({ onClose }: CreatePostModalProps) {
               className={styles.primaryBtn}
               type="submit"
               disabled={uploading}
-            >Upload</button>
-
-            {uploading && (
-              <div className={styles.uploadingOverlay}>
-                <h3 className={styles.loadingUser}>
-                  Uploading<span className={styles.dots}></span>
-                </h3>
-              </div>
-            )}
+            >
+              {uploading ? (
+                <>Uploading<span className={styles.dots}></span></>
+              ) : (
+                'Upload'
+              )}
+            </button>
 
             {errorMessage && (
               <p className={styles.error}>{errorMessage}</p>

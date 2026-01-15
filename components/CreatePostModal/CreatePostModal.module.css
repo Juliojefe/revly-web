@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   background: #848c9dab;
+  z-index: 1000;
 }
 
 .modalForm {

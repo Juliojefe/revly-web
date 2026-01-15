@@ -55,7 +55,6 @@ export default function Navbar() {
         <FaPlusSquare className={styles.icon} />
         <p>Create</p>
       </div>
-      {isModalOpen && <CreatePostModal onClose={() => setIsModalOpen(false)} />}
 
       <div className={styles.iconWrapper} onClick={doNothing}>
         <FaBell className={styles.icon} />
