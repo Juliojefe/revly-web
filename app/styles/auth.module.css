@@ -46,6 +46,15 @@
   border: 2px solid black;
 }
 
+.formTextArea {
+  background: white;
+  color: black;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid black;
+}
+
 .primaryBtn {
   padding: 0.7rem;
   font-weight: bold;

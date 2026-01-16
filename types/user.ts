@@ -7,4 +7,5 @@ export interface User {
   refreshToken: string;
   isAdmin: boolean;
   isMechanic: boolean;
+  biography: string;
 }

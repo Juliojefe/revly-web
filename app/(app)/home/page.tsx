@@ -9,6 +9,8 @@ export default function Home() {
   const router = useRouter();
   const { user, logout } = useUser();
 
+  console.log(user);
+
   async function handleLogout() {
     logout();
     router.push("/login");
@@ -20,6 +22,9 @@ export default function Home() {
         Welcome {user?.name || "friend"}{" "}
         {user?.isAdmin && "👑"}
         {user?.isMechanic && "🔧"}
+      </h2>
+      <h2>
+        {user?.biography || ""}
       </h2>
       <img src="/images/waitingCat.jpg"></img>
       <button
