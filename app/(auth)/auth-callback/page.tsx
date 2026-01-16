@@ -25,6 +25,7 @@ export default function AuthCallback() {
     const refreshToken = searchParams.get("refreshToken");
     const isAdmin = searchParams.get("isAdmin") === "true";
     const isMechanic = searchParams.get("isMechanic") === "true";
+    const biography = searchParams.get("biography") || "";
 
     if (name && email && accessToken && refreshToken) {
       const userData = {
@@ -36,6 +37,7 @@ export default function AuthCallback() {
         refreshToken,
         isAdmin,
         isMechanic,
+        biography
       };
       setUser(userData);
       router.push("/home");

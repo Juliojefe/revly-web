@@ -34,6 +34,7 @@ export default function loginPage() {
           refreshToken: authData.refreshToken,
           isAdmin: authData.isAdmin,
           isMechanic: authData.isMechanic,
+          biography: authData.biography
         });
         router.push("/home");
       } else {

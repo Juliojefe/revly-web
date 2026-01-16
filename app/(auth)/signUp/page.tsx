@@ -13,6 +13,7 @@ export default function signUpPage() {
   const { setUser } = useUser();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [biography, setBiography] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -25,7 +26,8 @@ export default function signUpPage() {
         name: name,
         email: email,
         password: password,
-        confirmPassword: confirmPassword
+        confirmPassword: confirmPassword,
+        biography: biography
       });
       const authData = responseData.data;
       if (authData.accessToken) {
@@ -38,6 +40,7 @@ export default function signUpPage() {
           refreshToken: authData.refreshToken,
           isAdmin: authData.isAdmin,
           isMechanic: authData.isMechanic,
+          biography: authData.biography
         });
         router.push("/home");
       } else {
@@ -78,6 +81,15 @@ export default function signUpPage() {
               required
               className={authStyles.formInput}
               onChange={e => setEmail(e.target.value)}
+            />
+          </label>
+          <label className={authStyles.formLabel}>Biography
+            <textarea
+              name="biography"
+              placeholder="Write a bio (optional) ..."
+              value={biography}
+              onChange={(e) => setBiography(e.target.value)}
+              className={authStyles.formTextArea}
             />
           </label>
           <label className={authStyles.formLabel}>Password
