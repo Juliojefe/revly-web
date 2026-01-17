@@ -16,13 +16,13 @@ export default function Post({ postData = null }: PostProps) {
   const [currImageIndex, setCurrImageIndex] = useState(0);
   const { user } = useUser();
   const hasImage = (postData?.imageUrls?.length ?? 0) > 0;  //  true if one image or more false otherwise
+  const deletedAuthor = postData?.authorId == null; //  true if the user has been deleted
 
   if (!postData) {
     return null;
   }
 
   async function handleGoToProfile(authorId: number) {
-    //  TODO
     return;
   }
 
@@ -51,28 +51,32 @@ export default function Post({ postData = null }: PostProps) {
     return;
   }
 
-  /**
-   * Next, I will simplify the sending logic below, as there is currently a lot of duplicate and repeated code.
-   * I will also handle the case where `authorId` is null.
-   * 
-   * Note: `authorId` may be null if a user has deleted their account. In that scenario,
-   * the `user_id` associated with the post is set to null via database cascade rules.
-   */
-
   return (
     <div className={styles.postContainer}>
       {/* header section */}
       <div
         className={styles.headerSection}
-        onClick={() => handleGoToProfile(postData.authorId)}
+        onClick={
+          deletedAuthor
+            ? undefined
+            : () => handleGoToProfile(postData.authorId)
+        }
+        style={deletedAuthor ? { cursor: "default" } : undefined}
       >
         <img
           className={styles.profilePic}
-          src={postData.createdByProfilePicUrl}
+          src={
+            deletedAuthor
+              ? "/images/deletedUserPfp.png"
+              : postData.createdByProfilePicUrl
+          }
           alt="profile picture"
         />
-        <p className={styles.userName}>{postData.createdBy}</p>
+        <p className={styles.userName}>
+          {deletedAuthor ? "Deleted User" : postData.createdBy}
+        </p>
       </div>
+
       {/* Image Section */}
       {hasImage ? (
         <div className={styles.imageSection}>
