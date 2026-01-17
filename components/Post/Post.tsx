@@ -14,13 +14,15 @@ interface PostProps {
 export default function Post({ postData = null }: PostProps) {
   const router = useRouter();
   const [currImageIndex, setCurrImageIndex] = useState(0);
+  const { user } = useUser();
+  const hasImage = (postData?.imageUrls?.length ?? 0) > 0;  //  true if one image or more false otherwise
+  const deletedAuthor = postData?.authorId == null; //  true if the user has been deleted
 
   if (!postData) {
     return null;
   }
 
   async function handleGoToProfile(authorId: number) {
-    //  TODO
     return;
   }
 
@@ -49,58 +51,34 @@ export default function Post({ postData = null }: PostProps) {
     return;
   }
 
-  if (postData.imageUrls.length === 0) {
-    return (
-      <div className={styles.postContainer}>
-        {/* header section */}
-        <div
-          className={styles.headerSection}
-          onClick={() => handleGoToProfile(postData.authorId)}
-        >
-          <img
-            className={styles.profilePic}
-            src={postData.createdByProfilePicUrl}
-            alt="profile picture"
-          />
-          <p className={styles.userName}>{postData.createdBy}</p>
-        </div>
-        {/* description section */}
-        <p className={styles.postDescription}>{postData.description || ""}</p>
-        {/* like count */}
-        <p className={styles.likeCount}>{postData.likeCount || 0} likes</p>
-        {/* like comment save icons */}
-        <div className={styles.actionIcons}>
-          <FaRegHeart
-            className={styles.icon}
-            onClick={() => handleLike()}
-          />
-          <FaRegComment
-            className={styles.icon}
-            onClick={() => handleComments()}
-          />
-          <FaRegBookmark
-            className={styles.icon}
-            onClick={() => handleSave()}
-          />
-        </div>
+  return (
+    <div className={styles.postContainer}>
+      {/* header section */}
+      <div
+        className={styles.headerSection}
+        onClick={
+          deletedAuthor
+            ? undefined
+            : () => handleGoToProfile(postData.authorId)
+        }
+        style={deletedAuthor ? { cursor: "default" } : undefined}
+      >
+        <img
+          className={styles.profilePic}
+          src={
+            deletedAuthor
+              ? "/images/deletedUserPfp.png"
+              : postData.createdByProfilePicUrl
+          }
+          alt="profile picture"
+        />
+        <p className={styles.userName}>
+          {deletedAuthor ? "Deleted User" : postData.createdBy}
+        </p>
       </div>
-    );
-  } else {
-    return (
-      <div className={styles.postContainer}>
-        {/* header section */}
-        <div
-          className={styles.headerSection}
-          onClick={() => handleGoToProfile(postData.authorId)}
-        >
-          <img
-            className={styles.profilePic}
-            src={postData.createdByProfilePicUrl}
-            alt="profile picture"
-          />
-          <p className={styles.userName}>{postData.createdBy}</p>
-        </div>
-        {/* image section */}
+
+      {/* Image Section */}
+      {hasImage ? (
         <div className={styles.imageSection}>
           {postData.imageUrls?.[0] && (
             <img
@@ -120,26 +98,27 @@ export default function Post({ postData = null }: PostProps) {
             </button>
           )}
         </div>
-        {/* like count */}
-        <p className={styles.likeCount}>{postData.likeCount || 0} likes</p>
-        {/* like comment save icons */}
-        <div className={styles.actionIcons}>
-          <FaRegHeart
-            className={styles.icon}
-            onClick={() => handleLike()}
-          />
-          <FaRegComment
-            className={styles.icon}
-            onClick={() => handleComments()}
-          />
-          <FaRegBookmark
-            className={styles.icon}
-            onClick={() => handleSave()}
-          />
-        </div>
-        {/* description section */}
-        <p className={styles.postDescription}>{postData.description || ""}</p>
+      ) : null}
+      {/* description section */}
+      <p className={styles.postDescription}>{postData.description || ""}</p>
+      {/* like count */}
+      <p className={styles.likeCount}>{postData.likeCount || 0} likes</p>
+      {/* like comment save icons */}
+      <div className={styles.actionIcons}>
+        <FaRegHeart
+          className={styles.icon}
+          onClick={() => handleLike()}
+        />
+        <FaRegComment
+          className={styles.icon}
+          onClick={() => handleComments()}
+        />
+        <FaRegBookmark
+          className={styles.icon}
+          onClick={() => handleSave()}
+        />
       </div>
-    );
-  }
+    </div>
+
+  )
 }
